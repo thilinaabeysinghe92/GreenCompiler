@@ -1,0 +1,24 @@
+%{
+#include "green.h"	
+%}
+
+%%
+=	return EQUAL;
+"file"	return FILE;
+"data"	return DATA;
+"graph"	return GRAPH;
+"svn"	return SVN;
+(	return OPEN_PARA;
+)	return CLOSE_PARA;
+"@start" return OPENTAG;
+"@end"	 return CLOSETAG;
+
+[a-zA-Z][a-zA-Z0-9]* return WORD;
+[1-9][0-9]*	return DEGIT;
+[ \t\n ]	;
+.		printf("Unrecognized Character");
+
+%%
+int yywrap(void)
+{
+	return 1;

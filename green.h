@@ -1,0 +1,14 @@
+#define MYFILE 1
+#define DATA 2
+#define GRAPH 3
+#define SVN 4
+#define EQUAL 5
+#define OPEN_PARA 6
+#define CLOSE_PARA 7
+#define DOT 8
+#define WORD 9
+#define DEGIT 10
+#define OPENTAG 11
+#define CLOSETAG 12
+#define QUATATION 13
+#define ENDSTATEMENT 14
