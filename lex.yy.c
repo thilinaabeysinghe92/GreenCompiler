@@ -516,8 +516,10 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "green.l"
 #line 2 "green.l"
-#include "green.h"	
-#line 521 "lex.yy.c"
+#include "y.tab.h"
+extern int yyval;
+
+#line 523 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -733,9 +735,9 @@ YY_DECL
 		}
 
 	{
-#line 7 "green.l"
+#line 9 "green.l"
 
-#line 739 "lex.yy.c"
+#line 741 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -804,86 +806,86 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "green.l"
+#line 10 "green.l"
 return EQUAL;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "green.l"
+#line 11 "green.l"
 return MYFILE;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "green.l"
+#line 12 "green.l"
 return DATA;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "green.l"
+#line 13 "green.l"
 return GRAPH;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "green.l"
+#line 14 "green.l"
 return SVN;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 13 "green.l"
+#line 15 "green.l"
 return OPEN_PARA;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 14 "green.l"
+#line 16 "green.l"
 return CLOSE_PARA;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 15 "green.l"
+#line 17 "green.l"
 return OPENTAG;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 16 "green.l"
+#line 18 "green.l"
 return CLOSETAG;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 17 "green.l"
+#line 19 "green.l"
 return QUATATION;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 18 "green.l"
+#line 20 "green.l"
 return ENDSTATEMENT;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 21 "green.l"
-return WORD;
+#line 23 "green.l"
+{yylval.str = strdup(yytext); return MYWORD;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 22 "green.l"
-return DEGIT;
+#line 24 "green.l"
+{yyval = atoi(yytext); return DEGIT; };
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 23 "green.l"
+#line 25 "green.l"
 ;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 24 "green.l"
+#line 26 "green.l"
 printf("Unrecognized Character %s \n ", yytext);
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 26 "green.l"
+#line 28 "green.l"
 ECHO;
 	YY_BREAK
-#line 887 "lex.yy.c"
+#line 889 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1855,13 +1857,10 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 26 "green.l"
+#line 28 "green.l"
 
 
-int yywrap(void)
-{
-	return 1;
-}
+
 
 
 

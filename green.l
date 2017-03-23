@@ -1,5 +1,7 @@
 %{
-#include "green.h"	
+#include "y.tab.h"
+extern int yyval;
+
 %}
 
 %option nounput yylineno
@@ -18,15 +20,12 @@
 ";"	return ENDSTATEMENT;
 
 
-[a-zA-Z][_a-zA-Z0-9]* return WORD;
-[1-9][0-9]*	return DEGIT;
+[a-zA-Z][_a-zA-Z0-9]* {yylval.str = strdup(yytext); return MYWORD;}
+[1-9][0-9]*	{yyval = atoi(yytext); return DEGIT; };
 [ \t\n ]	;
 .		printf("Unrecognized Character %s \n ", yytext);
 
 %%
-int yywrap(void)
-{
-	return 1;
-}
+
 
 

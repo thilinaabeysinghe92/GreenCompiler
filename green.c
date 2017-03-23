@@ -21,6 +21,11 @@ int main(void)
 			return 1;
 		}
 
+		if(tokenname == MYFILE)
+		{
+			
+		}
+
 		tokenname = yylex();
 
 	}

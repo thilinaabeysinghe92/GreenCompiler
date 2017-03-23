@@ -12,3 +12,5 @@
 #define CLOSETAG 12
 #define QUATATION 13
 #define ENDSTATEMENT 14
+#define MYWORD 15
+#define DEGIT 16
