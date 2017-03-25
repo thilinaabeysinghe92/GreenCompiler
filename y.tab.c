@@ -19,9 +19,13 @@
 
 #line 2 "green.y"
 	#include <stdio.h>
+	#include <stdlib.h>
+
 	extern int yylex();
-	extern int yylineno;	
-#line 7 "green.y"
+	extern int yylineno;
+	extern char* yytext;
+
+#line 11 "green.y"
 #ifdef YYSTYPE
 #undef  YYSTYPE_IS_DECLARED
 #define YYSTYPE_IS_DECLARED 1
@@ -32,7 +36,7 @@ typedef union {
      char *str;
 } YYSTYPE;
 #endif /* !YYSTYPE_IS_DECLARED */
-#line 36 "y.tab.c"
+#line 40 "y.tab.c"
 
 /* compatibility with bison */
 #ifdef YYPARSE_PARAM
@@ -166,10 +170,11 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 31 "green.y"
+#line 52 "green.y"
 
 int main(void){
 	return yyparse();
+
 }
 int yywrap(void)
 {
@@ -178,7 +183,7 @@ int yywrap(void)
 int yyerror(char *msg){
 	return fprintf(stderr, "Green Output %s Error  \n", msg);
 }
-#line 182 "y.tab.c"
+#line 187 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -381,14 +386,31 @@ yyreduce:
     switch (yyn)
     {
 case 1:
-#line 22 "green.y"
+#line 26 "green.y"
 	{	
 
 			printf("read file %s and store in %s ", yystack.l_mark[-4].str , yystack.l_mark[-1].str);
-	
+
+
+			char statement[1000] = "";
+
+			strcat(statement, yystack.l_mark[-4].str);
+			strcat(statement, "=pd.read_csv(\"");
+			strcat(statement, yystack.l_mark[-1].str);
+			strcat(statement, "\")");
+
+
+			printf("%s\n", statement);
+			FILE *pythonFile;
+			pythonFile = fopen("setup.py", "w+");
+			fputs("import pandas as pd \n", pythonFile);
+			fputs(statement, pythonFile);
+			fclose(pythonFile);
+
+			
 		}
 break;
-#line 392 "y.tab.c"
+#line 414 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;
