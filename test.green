@@ -1,1 +1,8 @@
 file f = "Hello"
+
+x = select tsa from f
+
+y = select sliit from f
+
+<eof>
+

@@ -82,40 +82,61 @@ extern int YYPARSE_DECL();
 #define ENDSTATEMENT 267
 #define MYWORD 268
 #define DEGIT 269
+#define Y 270
+#define FROM 271
+#define COLNAMES 272
+#define X 273
+#define SELECT 274
+#define PLOT 275
+#define BAR 276
+#define CHART 277
+#define ENDOFDOC 278
 #define YYERRCODE 256
 typedef short YYINT;
 static const YYINT yylhs[] = {                           -1,
-    0,
+    0,    0,    1,    2,    3,    4,
 };
 static const YYINT yylen[] = {                            2,
-    6,
+    0,    4,    6,    6,    6,    1,
 };
 static const YYINT yydefred[] = {                         0,
-    0,    0,    0,    0,    0,    0,    1,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    6,    2,    0,    0,    0,    3,    0,
+    0,    4,    0,    5,
 };
 static const YYINT yydgoto[] = {                          2,
+    3,    6,   10,   15,
 };
 static const YYINT yysindex[] = {                      -258,
- -267,    0, -255, -263, -264, -261,    0,
+ -267,    0, -271, -254, -253, -265, -260, -266, -250, -269,
+ -257, -256, -264,    0,    0, -252, -255, -251,    0, -249,
+ -248,    0, -247,    0,
 };
-static const YYINT yyrindex[] = {                         0,
-    0,    0,    0,    0,    0,    0,    0,
+static const YYINT yyrindex[] = {                        13,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
+    0,    0,    0,    0,
 };
 static const YYINT yygindex[] = {                         0,
+    0,    0,    0,    0,
 };
-#define YYTABLESIZE 5
+#define YYTABLESIZE 23
 static const YYINT yytable[] = {                          1,
-    3,    4,    5,    6,    7,
+    4,    5,    7,    8,    9,   11,   13,   12,   14,   18,
+   16,   17,    1,   19,    0,   20,   21,    0,   22,    0,
+   24,    0,   23,
 };
 static const YYINT yycheck[] = {                        258,
-  268,  257,  266,  268,  266,
+  268,  273,  257,  257,  270,  266,  257,  274,  278,  274,
+  268,  268,    0,  266,   -1,  271,  268,   -1,  268,   -1,
+  268,   -1,  271,
 };
 #define YYFINAL 2
 #ifndef YYDEBUG
 #define YYDEBUG 0
 #endif
-#define YYMAXTOKEN 269
-#define YYUNDFTOKEN 272
+#define YYMAXTOKEN 278
+#define YYUNDFTOKEN 285
 #define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
 static const char *const yyname[] = {
@@ -128,11 +149,17 @@ static const char *const yyname[] = {
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"EQUAL","MYFILE","DATA","GRAPH",
 "SVN","OPEN_PARA","CLOSE_PARA","OPENTAG","CLOSETAG","QUATATION","ENDSTATEMENT",
-"MYWORD","DEGIT",0,0,"illegal-symbol",
+"MYWORD","DEGIT","Y","FROM","COLNAMES","X","SELECT","PLOT","BAR","CHART",
+"ENDOFDOC",0,0,0,0,0,0,"illegal-symbol",
 };
 static const char *const yyrule[] = {
 "$accept : green",
-"green : MYFILE MYWORD EQUAL QUATATION MYWORD QUATATION",
+"green :",
+"green : fileread dataX dataY end",
+"fileread : MYFILE MYWORD EQUAL QUATATION MYWORD QUATATION",
+"dataX : X EQUAL SELECT MYWORD FROM MYWORD",
+"dataY : Y EQUAL SELECT MYWORD FROM MYWORD",
+"end : ENDOFDOC",
 
 };
 #endif
@@ -170,7 +197,7 @@ typedef struct {
 } YYSTACKDATA;
 /* variables for the parser stack */
 static YYSTACKDATA yystack;
-#line 52 "green.y"
+#line 97 "green.y"
 
 int main(void){
 	return yyparse();
@@ -181,9 +208,9 @@ int yywrap(void)
 	return 1;
 }
 int yyerror(char *msg){
-	return fprintf(stderr, "Green Output %s Error  \n", msg);
+	return fprintf(stderr, "Green Output %s \n", msg);
 }
-#line 187 "y.tab.c"
+#line 214 "y.tab.c"
 
 #if YYDEBUG
 #include <stdio.h>		/* needed for printf */
@@ -385,32 +412,78 @@ yyreduce:
         memset(&yyval, 0, sizeof yyval);
     switch (yyn)
     {
-case 1:
-#line 26 "green.y"
+case 2:
+#line 27 "green.y"
+	{
+
+		 }
+break;
+case 3:
+#line 33 "green.y"
 	{	
 
 			printf("read file %s and store in %s ", yystack.l_mark[-4].str , yystack.l_mark[-1].str);
-
-
 			char statement[1000] = "";
-
 			strcat(statement, yystack.l_mark[-4].str);
 			strcat(statement, "=pd.read_csv(\"");
 			strcat(statement, yystack.l_mark[-1].str);
-			strcat(statement, "\")");
-
-
-			printf("%s\n", statement);
+			strcat(statement, "\") \n");
 			FILE *pythonFile;
-			pythonFile = fopen("setup.py", "w+");
-			fputs("import pandas as pd \n", pythonFile);
+			pythonFile = fopen("setup.py", "a");
+			fputs("import pandas as pd \n", pythonFile);						
 			fputs(statement, pythonFile);
 			fclose(pythonFile);
 
 			
 		}
 break;
-#line 414 "y.tab.c"
+case 4:
+#line 51 "green.y"
+	{
+
+			printf("x = %s [[ %s ]]\n",yystack.l_mark[0].str, yystack.l_mark[-2].str);
+			char statement[1000] = "";
+			strcat(statement, "x = ");
+			strcat(statement, yystack.l_mark[0].str);
+			strcat(statement, "[[");
+			strcat(statement, yystack.l_mark[-2].str);
+			strcat(statement, "]] \n");
+
+			FILE *pythonFile;
+			pythonFile = fopen("setup.py", "a");
+			fputs(statement, pythonFile);
+			fclose(pythonFile);
+
+
+		}
+break;
+case 5:
+#line 70 "green.y"
+	{
+
+			printf("y = %s [[ %s ]]\n",yystack.l_mark[0].str, yystack.l_mark[-2].str);
+
+			char statement[1000] = "";
+			strcat(statement, "y =");
+			strcat(statement, yystack.l_mark[0].str);
+			strcat(statement, "[[");
+			strcat(statement, yystack.l_mark[-2].str);
+			strcat(statement, "]] \n");
+
+			FILE *pythonFile;
+			pythonFile = fopen("setup.py", "a");
+			fputs(statement, pythonFile);
+			fclose(pythonFile);
+
+		}
+break;
+case 6:
+#line 89 "green.y"
+	{
+			printf("Compilation Finished \n ");
+		}
+break;
+#line 487 "y.tab.c"
     }
     yystack.s_mark -= yym;
     yystate = *yystack.s_mark;

@@ -14,3 +14,12 @@
 #define ENDSTATEMENT 14
 #define MYWORD 15
 #define DEGIT 16
+#define FROM 17
+#define COLNAMES 18
+#define SELECT 19
+#define X 20
+#define Y 21
+#define PLOT 22
+#define BAR 23
+#define CHART 24
+#define ENDOFDOC 25
